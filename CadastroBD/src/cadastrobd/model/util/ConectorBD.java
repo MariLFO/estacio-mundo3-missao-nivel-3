@@ -60,4 +60,34 @@ public class ConectorBD {
             return null;
         }
     }
+
+    public static void close(PreparedStatement st) {
+        try {
+            if (st != null) {
+                st.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar o Statement: " + e.getMessage());
+        }
+    }
+
+    public static void close(ResultSet rs) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar o ResultSet: " + e.getMessage());
+        }
+    }
+
+    public static void close(Connection con) {
+        try {
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar a conexão: " + e.getMessage());
+        }
+    }
 }
