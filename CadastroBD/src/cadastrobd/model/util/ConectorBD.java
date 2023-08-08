@@ -5,7 +5,6 @@ package cadastrobd.model.util;
  * @author Mari
  */
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,12 +12,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConectorBD {
-    private static final String DRIVER = ""; // Nome do driver JDBC
-    private static final String URL = ""; // URL do banco de dados
-    private static final String USER = ""; // Usuário do banco de dados
-    private static final String PASSWORD = ""; // Senha do banco de dados
+    private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // Nome do driver JDBC
+    private static final String URL = "jdbc:sqlserver://localhost\\MSSQL:1433;databaseName=loja;encrypt=true;trustServerCertificate=true;"; // URL do banco de dados
+    private static final String USER = "loja"; // Usuário do banco de dados
+    private static final String PASSWORD = "loja"; // Senha do banco de dados
 
-    // Método getConnection
     public static Connection getConnection() {
         try {
             // Carrega o driver JDBC na memória
@@ -31,50 +29,38 @@ public class ConectorBD {
         }
     }
 
-    public static PreparedStatement getPrepared(String sql) {
-        // Tenta obter um objeto PreparedStatement a partir de um SQL fornecido como parâmetro
+    public static PreparedStatement getPrepared(Connection conexao, String sql) {
         try {
-            Connection con = getConnection();
-            if (con != null) {
-                return con.prepareStatement(sql);
-            } else {
-                return null;
-            }
+            return conexao.prepareStatement(sql);
         } catch (SQLException e) {
             System.out.println("Erro ao preparar o SQL: " + e.getMessage());
             return null;
         }
     }
 
-    public static ResultSet getSelect(String sql) {
-        // Tenta obter um objeto ResultSet a partir de um SQL fornecido como parâmetro
+    public static ResultSet getSelect(PreparedStatement consulta) {
         try {
-            PreparedStatement ps = getPrepared(sql);
-            if (ps != null) {
-                return ps.executeQuery();
-            } else {
-                return null;
-            }
+            return consulta.executeQuery();
         } catch (SQLException e) {
             System.out.println("Erro ao executar a consulta: " + e.getMessage());
             return null;
         }
     }
 
-    public static void close(PreparedStatement st) {
+    public static void close(PreparedStatement statement) {
         try {
-            if (st != null) {
-                st.close();
+            if (statement != null) {
+                statement.close();
             }
         } catch (SQLException e) {
             System.out.println("Erro ao fechar o Statement: " + e.getMessage());
         }
     }
 
-    public static void close(ResultSet rs) {
+    public static void close(ResultSet resultado) {
         try {
-            if (rs != null) {
-                rs.close();
+            if (resultado != null) {
+                resultado.close();
             }
         } catch (SQLException e) {
             System.out.println("Erro ao fechar o ResultSet: " + e.getMessage());
