@@ -20,12 +20,16 @@ public class ConectorBD {
     public static Connection getConnection() {
         try {
             // Carrega o driver JDBC na memória
-            Class.forName(DRIVER);
+            Class.forName(DRIVER).newInstance();;
             // Retorna uma conexão com o banco de dados
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Erro ao conectar com o banco de dados: " + e.getMessage());
             return null;
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
