@@ -12,15 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConectorBD {
-    private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // Nome do driver JDBC
-    private static final String URL = "jdbc:sqlserver://localhost\\MSSQL:1433;databaseName=loja;encrypt=true;trustServerCertificate=true;"; // URL do banco de dados
-    private static final String USER = "loja"; // Usuário do banco de dados
-    private static final String PASSWORD = "loja"; // Senha do banco de dados
+    private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String URL = "jdbc:sqlserver://localhost\\MSSQL:1433;databaseName=loja;encrypt=true;trustServerCertificate=true;";
+    private static final String USER = "loja";
+    private static final String PASSWORD = "loja";
 
     public static Connection getConnection() {
         try {
             // Carrega o driver JDBC na memória
-            Class.forName(DRIVER).newInstance();;
+            Class.forName(DRIVER).newInstance();
             // Retorna uma conexão com o banco de dados
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
